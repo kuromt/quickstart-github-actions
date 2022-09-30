@@ -6,6 +6,8 @@ jobs:
   list-diff:
     runs-on: ubuntu-latest
     steps:
+      - run: pwd
+      - run: ls -la
       - run: echo "${{ github.base_ref }} ${{ github.ref }}"
       - run: mkdir -p output/
       - run: git diff ${{ github.base_ref }} --name-only > output/diff-files.txt
