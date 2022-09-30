@@ -7,4 +7,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "${{ github.base_ref }} ${{ github.ref }}"
-      - run: git diff $GITHUB_BASE_REF --name-only
+      - run: git diff ${{ github.base_ref }} --name-only
