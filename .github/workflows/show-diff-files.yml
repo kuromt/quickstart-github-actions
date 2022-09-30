@@ -3,4 +3,7 @@ run-name: list diff files
 on: [pull_request]
 
 jobs:
-  list-diff: git diff $GITHUB_BASE_REF --name-only
+  list-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - run: git diff $GITHUB_BASE_REF --name-only
