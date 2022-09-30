@@ -6,5 +6,20 @@ jobs:
   list-diff:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          ref: ${{ github.ref }}
       - run: echo "${{ github.base_ref }} ${{ github.ref }}"
-      - run: git diff ${{ github.base_ref }} --name-only
+      - run: mkdir -p output/
+      - run: git diff origin/${{ github.base_ref }} --name-only > output/diff-files.txt
+      - uses: actions/upload-artifact@v1
+        with:
+          name: results
+          path: output
+      - uses: actions/download-artifact@v1
+        with:
+          name: results
+          path: path/to/artifact
+      - name: show files
+        run: cat path/to/artifact/* | xargs echo 
