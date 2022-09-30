@@ -1,0 +1,10 @@
+name: list updated files
+run-name: list diff files
+on: [pull_request]
+
+jobs:
+  list-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ github.base_ref }} ${{ github.ref }}"
+      - run: git diff ${{ github.base_ref }} --name-only
