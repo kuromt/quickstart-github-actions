@@ -6,5 +6,5 @@ jobs:
   list-diff:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "$GITHUB_BASE_REF $GITHUB_REF"
+      - run: echo "${{ github.base_ref }} ${{ github.ref }}"
       - run: git diff $GITHUB_BASE_REF --name-only
