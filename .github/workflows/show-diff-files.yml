@@ -12,7 +12,7 @@ jobs:
           ref: ${{ github.ref }}
       - run: echo "${{ github.base_ref }} ${{ github.ref }}"
       - run: mkdir -p output/
-      - run: git diff ${{ github.base_ref }} --name-only > output/diff-files.txt
+      - run: git diff origin/${{ github.base_ref }} --name-only > output/diff-files.txt
       - uses: actions/upload-artifact@v1
         with:
           name: results
