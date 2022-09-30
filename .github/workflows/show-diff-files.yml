@@ -7,4 +7,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "${{ github.base_ref }} ${{ github.ref }}"
-      - run: git diff ${{ github.base_ref }} --name-only
+      - run: mkdir -p output/
+      - run: git diff ${{ github.base_ref }} --name-only > output/diff-files.txt
+      - uses: actions/upload-artifact@v1
+        with:
+          name: results
+          path: output
+      - uses: actions/download-artifact@v1
+        with:
+          name: results
+      - name: comment diff
+        uses: machine-learning-apps/pr-comment@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          path: results/results.txt
