@@ -18,6 +18,11 @@ jobs:
         id: diff-notebooks
         run: |
           echo "::set-output name=diff::$(git diff origin/${{ github.base_ref }} --name-only | grep '.ipynb$')"
-      - name: run
+      - name: run nbdiff-web-exporter
         run: |
-          echo ${{steps.diff-notebooks.outputs.diff}}
+          mkdir ./artifacts
+          echo ${{steps.diff-notebooks.outputs.diff}} | xargs nbdiff-web-exporter --export-dir ./artifacts origin/${{ github.base_ref }} ${{ github.ref }} 
+      - uses: actions/upload-artifact@v2
+        with:
+          name: diff-html
+          path: ./artifacats/
