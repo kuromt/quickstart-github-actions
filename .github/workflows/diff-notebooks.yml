@@ -16,7 +16,7 @@ jobs:
         run: pip install git+https://github.com/kuromt/nbdiff-web-exporter
       - name: list changed notebook files
         id: diff-notebooks
-        run: git diff ${{ github.base_ref }} --name-only | grep ".ipynb$"
+        run: git diff origin/${{ github.base_ref }} --name-only | grep ".ipynb$"
       - name: run
         run: |
-          echo ${{steps.test.outputs.result}}
+          echo ${{steps.diff-notebooks.outputs.result}}
