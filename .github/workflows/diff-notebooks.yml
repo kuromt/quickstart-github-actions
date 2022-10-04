@@ -1,0 +1,22 @@
+name: diff-notebooks
+run-name: diff-notebooks
+on: [pull_request]
+
+jobs:
+  list-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source tree
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Setup Chrome and ChromeDriver
+        uses: ./.github/actions/setup-chrome
+      - name: install nbdiff-web-exporter
+        run: pip install git+https://github.com/kuromt/nbdiff-web-exporter
+      - name: list changed notebook files
+        id: diff-notebooks
+        run: git diff ${{ github.base_ref }} --name-only | grep ".ipynb$"
+      - name: run
+        run: |
+          echo ${{steps.test.outputs.result}}
