@@ -1,0 +1,32 @@
+name: diff-notebooks
+run-name: diff-notebooks
+on: [pull_request]
+
+jobs:
+  list-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source tree
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Setup Chrome and ChromeDriver
+        uses: ./.github/actions/setup-chrome
+      - name: install nbdiff-web-exporter
+        run: pip install git+https://github.com/kuromt/nbdiff-web-exporter
+      - name: list changed notebook files
+        id: diff-notebooks
+        run: |
+          echo "::set-output name=diff::$(git diff origin/${{ github.base_ref }} --name-only | grep '.ipynb$')"
+      - name: run nbdiff-web-exporter
+        run: |
+          mkdir ./artifacts
+          echo ${{steps.diff-notebooks.outputs.diff}} | xargs -L 1 nbdiff-web-exporter --port 20000 --export-dir ./artifacts origin/${{ github.base_ref }} HEAD
+      - uses: actions/upload-artifact@v2
+        with:
+          name: diff-html
+          path: ./artifacts/
