@@ -22,11 +22,14 @@ jobs:
         id: diff-notebooks
         run: |
           echo "::set-output name=diff::$(git diff origin/${{ github.base_ref }} --name-only | grep '.ipynb$')"
-      - name: run nbdiff-web-exporter
+      - name: show output
         run: |
-          mkdir ./artifacts
-          cat ${{steps.diff-notebooks.outputs.diff}} | xargs -L 1 nbdiff-web-exporter --port 20000 --export-dir ./artifacts origin/${{ github.base_ref }} HEAD
-      - uses: actions/upload-artifact@v2
-        with:
-          name: diff-html
-          path: ./artifacts/
+          cat ${{steps.diff-notebooks.outputs.diff}}
+      # - name: run nbdiff-web-exporter
+      #   run: |
+      #     mkdir ./artifacts
+      #     cat ${{steps.diff-notebooks.outputs.diff}} | xargs -L 1 nbdiff-web-exporter --port 20000 --export-dir ./artifacts origin/${{ github.base_ref }} HEAD
+      # - uses: actions/upload-artifact@v2
+      #   with:
+      #     name: diff-html
+      #     path: ./artifacts/
