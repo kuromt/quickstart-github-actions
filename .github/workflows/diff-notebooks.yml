@@ -30,7 +30,7 @@ jobs:
       - name: run nbdiff-web-exporter
         run: |
           mkdir ./artifacts
-          ${{steps.diff-notebooks.outputs.diff}} | xargs -L 1 nbdiff-web-exporter --port 20000 --export-dir ./artifacts origin/${{ github.base_ref }} HEAD
+          echo ${{steps.diff-notebooks.outputs.diff}} | xargs -L 1 nbdiff-web-exporter --port 20000 --export-dir ./artifacts origin/${{ github.base_ref }} HEAD
       - uses: actions/upload-artifact@v2
         with:
           name: diff-html
