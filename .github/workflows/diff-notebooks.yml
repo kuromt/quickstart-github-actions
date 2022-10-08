@@ -30,12 +30,12 @@ jobs:
       - name: run nbdiff-web-exporter
         run: |
           mkdir ./artifacts
-          if [ `echo -n "${{steps.diff-notebooks.outputs.DIFF_NOTEBOOKS}}" | wc -c` -gt 0]; then
+          if [ ${{steps.diff-notebooks.outputs.DIFF_NOTEBOOKS}} | wc -c` -gt 0]; then
             echo "diff files"
           else
             echo "no diff files"
           fi
-          echo ${{steps.diff-notebooks.outputs.DIFF_NOTEBOOKS}} | xargs -L 1 nbdiff-web-exporter --port 20000 --export-dir ./artifacts origin/${{ github.base_ref }} HEAD
+          ${{steps.diff-notebooks.outputs.DIFF_NOTEBOOKS}} | xargs -L 1 nbdiff-web-exporter --port 20000 --export-dir ./artifacts origin/${{ github.base_ref }} HEAD
       - uses: actions/upload-artifact@v2
         with:
           name: diff-html
