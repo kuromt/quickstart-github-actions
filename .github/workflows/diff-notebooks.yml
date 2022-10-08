@@ -22,7 +22,7 @@ jobs:
         id: diff-notebooks
         run: |
           echo '<<EOF' >> $DIFF_NOTEBOOKS
-          git diff origin/${{ github.base_ref }} --name-only | grep '.ipynb$' >> $DIFF_NOTEBOOKS
+          $(git diff origin/${{ github.base_ref }} --name-only | grep '.ipynb$') >> $DIFF_NOTEBOOKS
           echo 'EOF' >> $DIFF_NOTEBOOKS
       - name: show output
         run: |
