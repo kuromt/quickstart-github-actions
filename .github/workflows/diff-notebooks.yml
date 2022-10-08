@@ -21,11 +21,15 @@ jobs:
       - name: list changed notebook files
         id: diff-notebooks
         run: |
-          GIT_DIFF=$(git diff origin/${{ github.base_ref }} --name-only | grep '.ipynb$')
-          echo "$GIT_DIFF"
-          echo "::set-output name=DIFF_NOTEBOOKS::$GIT_DIFF"
+          DIFF_NOTEBOOKS=$(git diff origin/${{ github.base_ref }} --name-only | grep '.ipynb$')
+          DIFF_NOTEBOOKS="${DIFF_NOTEBOOKS//'%'/'%25'}"
+          DIFF_NOTEBOOKS="${DIFF_NOTEBOOKS//$'\n'/'%0A'}"
+          DIFF_NOTEBOOKS="${DIFF_NOTEBOOKS//$'\r'/'%0D'}"
+          echo "$DIFF_NOTEBOOKS"
+          echo "::set-output name=DIFF_NOTEBOOKS::$DIFF_NOTEBOOKS"
       - name: show output
         run: |
+          echo  ${{steps.diff-notebooks.outputs.DIFF_NOTEBOOKS}}
           echo  "${{steps.diff-notebooks.outputs.DIFF_NOTEBOOKS}}"
       # - name: run nbdiff-web-exporter
       #   run: |
