@@ -29,7 +29,7 @@ jobs:
           echo "::set-output name=DIFF_NOTEBOOKS::$DIFF_NOTEBOOKS"
       - name: echo-xargs
         run: |
-          cat <>EOF > diff_files.txt
+          cat <<EOF > diff_files.txt
             ${{steps.diff-notebooks.outputs.DIFF_NOTEBOOKS}}
             EOF
           cat diff_files.txt | xargs -L 1 echo 
