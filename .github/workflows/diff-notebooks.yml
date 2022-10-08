@@ -21,8 +21,9 @@ jobs:
       - name: list changed notebook files
         id: diff-notebooks
         run: |
-          DIFF_NOTEBOOKS=$(git diff origin/${{ github.base_ref }} --name-only | grep '.ipynb$')
-          echo "$DIFF_NOTEBOOKS"
+          GIT_DIFF=$(git diff origin/${{ github.base_ref }} --name-only | grep '.ipynb$')
+          echo "$GIT_DIFF"
+          echo "::set-output name=DIFF_NOTEBOOKS::$GIT_DIFF"
       - name: show output
         run: |
           echo  "$DIFF_NOTEBOOKS"
