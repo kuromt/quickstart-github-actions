@@ -31,8 +31,8 @@ jobs:
         run: |
           cat <<EOF > diff_files.txt
             ${{steps.diff-notebooks.outputs.DIFF_NOTEBOOKS}}
-            EOF
-            
+          EOF
+
           cat diff_files.txt | xargs -L 1 echo 
       - name: echo2
         run: |
