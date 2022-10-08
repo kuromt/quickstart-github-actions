@@ -22,10 +22,10 @@ jobs:
         id: diff-notebooks
         run: |
           DIFF_NOTEBOOKS=$(git diff origin/${{ github.base_ref }} --name-only | grep '.ipynb$')
-          echo $DIFF_NOTEBOOKS
+          echo "$DIFF_NOTEBOOKS"
       - name: show output
         run: |
-          cat  $DIFF_NOTEBOOKS
+          echo  "$DIFF_NOTEBOOKS"
       # - name: run nbdiff-web-exporter
       #   run: |
       #     mkdir ./artifacts
