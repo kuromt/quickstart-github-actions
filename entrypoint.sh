@@ -2,8 +2,10 @@
 set -ex
 
 if [ -n $1 ]; then
+    echo "set new base"
     BASE=${GITHUB_BASE_REF}
 else
+    echo "use default base"
     BASE=$1
 fi
 REMOTE=$2
