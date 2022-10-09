@@ -13,7 +13,7 @@ inputs:
     default: HEAD
   port:
     required: false
-      description: |
+    description: |
         specify the port you want the server to run on. Default is 8888.
     default: 8888
   nbdiff_web_exporter_options:
