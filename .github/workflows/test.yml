@@ -11,6 +11,5 @@ jobs:
           fetch-depth: 0
       - name: diff notebooks
         uses: ./ # Uses an action in the root directory
-        id: diff
         with:
-          remote: origin/diff-notebooks
+          remote: "origin/diff-notebooks"
