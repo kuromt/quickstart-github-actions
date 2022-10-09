@@ -1,0 +1,32 @@
+# action.yml
+name: 'nbdiff-exporter'
+description: 'Greet someone and record the time'
+inputs:
+  base:
+    required: false
+    description: |
+      The base notebook filename OR base git-revision.
+    default: origin/${{ github.base_ref }}
+  remote:
+    required: false
+    description: |
+      The remote modified notebook filename OR remote git-revision.
+    default: HEAD
+  port:
+    required: false
+      description: |
+        specify the port you want the server to run on. Default is 8888.
+    default: 8888
+  nbdiff_web_exporter_options:
+    required: false
+    description: | 
+      options of nbdiff-web-exporter. Do not set port and export-dir options.
+    default: ''
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.base }}
+    - ${{ inputs.remote }}
+    - ${{ inputs.remote }}
+    - ${{ inputs.nbdiff_web_exporter_options }}
