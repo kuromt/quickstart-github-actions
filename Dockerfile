@@ -8,7 +8,11 @@ RUN    # apt-utils is required.
 RUN    apt-get -qqy install apt-utils
 RUN    apt-get -qqy install google-chrome-stable
 RUN    CHROME_VERSION=$(google-chrome-stable --version)
+# print
+RUN    echo $CHROME_VERSION
 RUN    CHROME_FULL_VERSION=${CHROME_VERSION%%.*}
+# print
+RUN    echo $CHROME_FULL_VERSION
 #RUN    CHROME_MAJOR_VERSION=${CHROME_FULL_VERSION//[!0-9]}
 RUN    CHROME_MAJOR_VERSION=$(echo $CHROME_FULL_VERSION | sed -e 's/[^0-9]//g')
 RUN    rm /etc/apt/sources.list.d/google-chrome.list
