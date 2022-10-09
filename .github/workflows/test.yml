@@ -11,5 +11,11 @@ jobs:
           fetch-depth: 0
       - name: diff notebooks
         uses: ./ # Uses an action in the root directory
+        id: nbdiff-web-exporter-action
         with:
           remote: "origin/diff-notebooks"
+          export_dir: "./artifacts"
+      - uses: actions/upload-artifact@v2
+        with:
+          name: diff-notebooks
+          path: ${{steps.nbdiff-web-exporter-action.outputs.export_dir}}
