@@ -1,0 +1,41 @@
+name: diff-notebooks
+run-name: diff-notebooks
+on: [pull_request]
+
+jobs:
+  list-diff:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source tree
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Set up Python 3.9
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Setup Chrome and ChromeDriver
+        uses: ./.github/actions/setup-chrome
+      - name: install nbdiff-web-exporter
+        run: pip install git+https://github.com/kuromt/nbdiff-web-exporter
+      - name: list changed notebook files
+        id: diff-notebooks
+        run: |
+          DIFF_NOTEBOOKS=$(git diff origin/${{ github.base_ref }} --name-only | grep '.ipynb$')
+          DIFF_NOTEBOOKS="${DIFF_NOTEBOOKS//'%'/'%25'}"
+          DIFF_NOTEBOOKS="${DIFF_NOTEBOOKS//$'\n'/'%0A'}"
+          DIFF_NOTEBOOKS="${DIFF_NOTEBOOKS//$'\r'/'%0D'}"
+          echo "$DIFF_NOTEBOOKS"
+          echo "::set-output name=DIFF_NOTEBOOKS::$DIFF_NOTEBOOKS"
+      - name: run nbdiff-web-exporter
+        run: |
+          cat <<EOF > diff_files.txt
+            ${{steps.diff-notebooks.outputs.DIFF_NOTEBOOKS}}
+          EOF
+
+          mkdir ./artifacts
+          cat diff_files.txt | xargs -L 1 nbdiff-web-exporter --port 20000 --export-dir ./artifacts origin/${{ github.base_ref }} HEAD
+      - uses: actions/upload-artifact@v2
+        with:
+          name: diff-html
+          path: ./artifacts/
