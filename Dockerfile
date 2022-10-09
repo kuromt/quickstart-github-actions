@@ -1,4 +1,4 @@
-FROM pypy:3.9
+FROM python:3.9
 
 # install chrome driver
 RUN /bin/bash -c 'wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
