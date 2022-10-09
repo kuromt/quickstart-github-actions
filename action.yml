@@ -1,6 +1,6 @@
 # action.yml
 name: 'nbdiff-exporter'
-description: 'Greet someone and record the time'
+description: 'diff notebooks test'
 inputs:
   base:
     required: false
@@ -28,5 +28,5 @@ runs:
   args:
     - ${{ inputs.base }}
     - ${{ inputs.remote }}
-    - ${{ inputs.remote }}
+    - ${{ inputs.port }}
     - ${{ inputs.nbdiff_web_exporter_options }}
