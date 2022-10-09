@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -ex
 
+env
+
 if [ -n $1 ]; then
     echo "set new base"
     BASE=("${GITHUB_BASE_REF}")
