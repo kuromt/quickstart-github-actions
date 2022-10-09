@@ -27,9 +27,6 @@ jobs:
           DIFF_NOTEBOOKS="${DIFF_NOTEBOOKS//$'\r'/'%0D'}"
           echo "$DIFF_NOTEBOOKS"
           echo "::set-output name=DIFF_NOTEBOOKS::$DIFF_NOTEBOOKS"
-      # - name: echo-xargs
-      #   run: |
-      #     cat diff_files.txt | xargs -L 1 echo 
       - name: run nbdiff-web-exporter
         run: |
           cat <<EOF > diff_files.txt
@@ -37,7 +34,7 @@ jobs:
           EOF
 
           mkdir ./artifacts
-          cat diff_files.txt | xargs -L 1 nbdiff-web-exporter --port 20000 --export-dir ./artifacts origin/${{ github.base_ref }} HEAD
+          cat diff_files.txt | xargs -L 1 nbdiff-web-exporter --port 20000 -m --export-dir ./artifacts origin/${{ github.base_ref }} HEAD
       - uses: actions/upload-artifact@v2
         with:
           name: diff-html
