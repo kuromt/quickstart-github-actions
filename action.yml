@@ -5,7 +5,7 @@ inputs:
     required: false
     description: |
       The base notebook filename OR base git-revision.
-    default: origin/${{ github.base_ref }}
+    default: ""
   remote:
     required: false
     description: |
