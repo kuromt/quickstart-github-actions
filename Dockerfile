@@ -3,8 +3,8 @@ FROM python:3.9
 # install chrome driver
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/apt/sources.list.d/google-chrome.list \
-    apt-get update -qqy \
-    apt-get -qqy install google-chrome-stable \
+    apt-get update -y \
+    apt-get -y install google-chrome-stable \
     CHROME_VERSION=$(google-chrome-stable --version) \
     CHROME_FULL_VERSION=${CHROME_VERSION%%.*} \
     CHROME_MAJOR_VERSION=${CHROME_FULL_VERSION//[!0-9]} \
