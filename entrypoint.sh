@@ -1,7 +1,11 @@
-#!/bin/sh -l
+#!/bin/bash -l
 set -ex
 
-BASE=$1
+if [ -n $1 ]; then
+    BASE=${GITHUB_BASE_REF}
+else
+    BASE=$1
+fi
 REMOTE=$2
 PORT=$3
 NBDIFF_WEB_EXPORTER_OPTIONS=$4
