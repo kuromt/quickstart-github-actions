@@ -12,7 +12,11 @@ RUN    CHROME_FULL_VERSION=${CHROME_VERSION%%.*}
 #RUN    CHROME_MAJOR_VERSION=${CHROME_FULL_VERSION//[!0-9]}
 RUN    CHROME_MAJOR_VERSION=$(echo $CHROME_FULL_VERSION | sed -e 's/[^0-9]//g')
 RUN    rm /etc/apt/sources.list.d/google-chrome.list
+# print
+RUN    echo "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION%%.*}"
 RUN    export CHROMEDRIVER_VERSION=`curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION%%.*}`
+# print
+RUN    echo "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
 RUN    curl -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
 RUN    unzip chromedriver_linux64.zip && chmod +x chromedriver && mv chromedriver /usr/local/bin
 RUN    chromedriver --version
