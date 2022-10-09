@@ -1,4 +1,4 @@
-#!/bin/bash -l
+#!/bin/bash
 set -ex
 
 if [ -n $1 ]; then
