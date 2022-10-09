@@ -9,7 +9,8 @@ RUN    apt-get -qqy install apt-utils
 RUN    apt-get -qqy install google-chrome-stable
 RUN    CHROME_VERSION=$(google-chrome-stable --version)
 RUN    CHROME_FULL_VERSION=${CHROME_VERSION%%.*}
-RUN    CHROME_MAJOR_VERSION=${CHROME_FULL_VERSION//[!0-9]}
+#RUN    CHROME_MAJOR_VERSION=${CHROME_FULL_VERSION//[!0-9]}
+RUN    CHROME_MAJOR_VERSION=$(echo $CHROME_FULL_VERSION | sed -e 's/[^0-9]//g')
 RUN    rm /etc/apt/sources.list.d/google-chrome.list
 RUN    export CHROMEDRIVER_VERSION=`curl -s https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR_VERSION%%.*}`
 RUN    curl -L -O "https://chromedriver.storage.googleapis.com/${CHROMEDRIVER_VERSION}/chromedriver_linux64.zip"
